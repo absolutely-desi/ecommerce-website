@@ -60,7 +60,7 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <img 
-              src="/ad-logo.png" 
+              src="/logo.jpg" 
               alt="Absolutely Desi Logo"
               className="h-16 md:h-20 w-auto ml-12 object-contain"
               style={{ 

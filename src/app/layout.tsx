@@ -1,17 +1,10 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { geistSans, geistMono, georgia, montserrat } from "@/lib/fonts";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { Toaster } from "sonner";
+import { DevSessionInspector } from "@/components/auth/DevSessionInspector"; // Add this import
 
 export const metadata: Metadata = {
   title: "Absolutely Desi",
@@ -25,11 +18,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${georgia.variable} ${montserrat.variable} antialiased bg-black text-white`}
       >
-        {children}
+          <AuthProvider>
+            {children}
+            <Toaster position="top-right" />
+            {process.env.NODE_ENV === "development" && <DevSessionInspector />} {/* Add here */}
+          </AuthProvider>
       </body>
     </html>
   );
