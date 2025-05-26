@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Image from 'next/image';
 
 interface Category {
   name: string;
@@ -66,10 +67,11 @@ export const FeaturedCategories: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-90" />
                 
                 {/* Image */}
-                <img
+                <Image
                   src={category.image}
                   alt={category.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  layout="fill"
+                  className="object-cover"
                 />
                 
                 {/* Content */}

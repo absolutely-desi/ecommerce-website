@@ -1,5 +1,6 @@
 import React from "react";
 import { Quote } from "lucide-react";
+import Image from "next/image";
 
 interface Testimonial {
   name: string;
@@ -46,7 +47,7 @@ export const Testimonials: React.FC = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {testimonials.map((testimonial) => (
             <div
               key={testimonial.name}
               className="bg-gray-900 p-8 border border-tan/20 relative"
@@ -58,17 +59,18 @@ export const Testimonials: React.FC = () => {
               
               <div className="mb-8">
                 <p className="text-gray-300 italic leading-relaxed">
-                  "{testimonial.text}"
+                &quot;{testimonial.text}&quot;
                 </p>
               </div>
               
               <div className="flex items-center">
                 {testimonial.image ? (
                   <div className="w-12 h-12 bg-gray-300 rounded-full overflow-hidden mr-4">
-                    <img
+                    <Image
                       src={testimonial.image}
                       alt={testimonial.name}
-                      className="w-full h-full object-cover"
+                      layout="fill"
+                      className="object-cover"
                     />
                   </div>
                 ) : (

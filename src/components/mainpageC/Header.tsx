@@ -2,7 +2,6 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { useState, useEffect } from "react"
 import { NavItem } from "@/components/navigation/NavItem"
 import { MegaMenu } from "@/components/navigation/MegaMenu"
@@ -10,7 +9,7 @@ import {
   womenMenuData, menMenuData, boysMenuData, girlsMenuData, 
   accessoriesMenuData, homeWearMenuData,
 } from "@/components/navigation/megaMenuData"
-import { Search, ShoppingCartIcon, Heart, User, ChevronDown, Menu, X } from "lucide-react"
+import { ShoppingCartIcon, Heart, User, ChevronDown, Menu, X } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
 import { 
   DropdownMenu, 
@@ -20,6 +19,7 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
+import Image from 'next/image';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -59,14 +59,16 @@ export function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <img 
-              src="/logo.jpg" 
+            <Image 
+              src="/ad-logo.png" 
               alt="Absolutely Desi Logo"
               className="h-16 md:h-20 w-auto ml-12 object-contain"
               style={{ 
                 maxHeight: isScrolled ? '50px' : '70px',
                 transition: 'max-height 0.3s ease'
               }}
+              width={200}
+              height={50}
             />
           </Link>
 

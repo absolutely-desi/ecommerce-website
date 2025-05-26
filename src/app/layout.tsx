@@ -3,13 +3,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { geistSans, geistMono, georgia, montserrat } from "@/lib/fonts";
 import { AuthProvider } from "@/contexts/AuthContext";
-import { Toaster } from "sonner";
-import { DevSessionInspector } from "@/components/auth/DevSessionInspector"; // Add this import
 
 export const metadata: Metadata = {
   title: "Absolutely Desi",
   description: "Premium affiliate marketplace for authentic Indian ethnic wear",
   keywords: "Indian clothing, ethnic wear, saree, lehenga, kurta, affiliate marketing",
+  icons: {
+    icon: "/ad-logo-3.jpg",
+  },
 };
 
 export default function RootLayout({
@@ -24,8 +25,6 @@ export default function RootLayout({
       >
           <AuthProvider>
             {children}
-            <Toaster position="top-right" />
-            {process.env.NODE_ENV === "development" && <DevSessionInspector />} {/* Add here */}
           </AuthProvider>
       </body>
     </html>

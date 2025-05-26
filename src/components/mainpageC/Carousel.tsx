@@ -2,6 +2,7 @@
 "use client"
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from 'next/image';
 
 const carouselImages: string[] = [
   "/cbg4.png",
@@ -31,10 +32,11 @@ export const Carousel: React.FC = () => {
             index === currentSlide ? "opacity-100" : "opacity-0"
           }`}
         >
-          <img
+          <Image
             src={image}
             alt={`Slide ${index + 1}`}
-            className="w-full h-full object-cover"
+            layout="fill"
+            className="object-cover"
           />
         </div>
       ))}

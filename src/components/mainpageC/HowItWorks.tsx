@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { UserPlus, Download, DollarSign, CheckCircle, ArrowRight } from "lucide-react";
+import { UserPlus, Download, IndianRupee, CheckCircle, ArrowRight } from "lucide-react";
 
 interface Step {
   title: string;
@@ -36,7 +36,7 @@ const steps: Step[] = [
     title: "Sell & Earn",
     description:
       "Leverage your network to earn substantial commissions with our industry-leading commission structure.",
-    icon: DollarSign,
+    icon: IndianRupee,
     benefits: [
       "Up to 25% commission per sale",
       "Performance bonuses",
@@ -62,17 +62,14 @@ export const HowItWorks: React.FC = () => {
           </p>
         </div>
 
-        <div className="relative grid md:grid-cols-3 gap-8 lg:gap-12">
-          {/* Connecting Line */}
-          <div className="hidden md:block absolute top-24 left-0 w-full h-0.5 bg-tan/30 -z-10" />
-
+        <div className="relative grid md:grid-cols-3 gap-8 lg:gap-12 px-10">
           {steps.map((step, index) => (
             <div
               key={step.title}
               className="relative"
             >
               {/* Step Number */}
-              <div className="absolute -top-6 -left-6 w-12 h-12 rounded-full bg-tan text-bangladesh-green flex items-center justify-center font-bold text-lg">
+              <div className="absolute -top-7 -left-7 w-12 h-12 rounded-full bg-tan text-bangladesh-green flex items-center justify-center font-bold text-lg">
                 {index + 1}
               </div>
 
