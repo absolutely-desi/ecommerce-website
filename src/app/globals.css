@@ -102,13 +102,30 @@
   * {
     @apply border-border;
   }
+  
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-montserrat), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
   }
   
-  /* Font styling for headings and text */
+  /* Use Montserrat for headings instead of Georgia */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    font-family: var(--font-montserrat), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  
+  /* Specific heading sizes */
+  h1 { @apply text-3xl font-bold tracking-tight; }
+  h2 { @apply text-2xl font-semibold tracking-tight; }
+  h3 { @apply text-xl font-semibold; }
+  h4 { @apply text-lg font-medium; }
+  
+  /* Better button and input fonts */
+  button, input, select, textarea {
+    font-family: var(--font-montserrat), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 }
 
@@ -122,30 +139,65 @@
     @apply py-16 md:py-24;
   }
 
-.luxury-header {
-    @apply text-4xl md:text-5xl lg:text-6xl font-serif font-bold tracking-wide text-teal-500 dark:text-white;
-}
+  .luxury-header {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-teal-500 dark:text-white;
+    font-family: var(--font-montserrat), sans-serif;
+  }
 
   .luxury-subheader {
-    @apply text-2xl md:text-3xl font-serif text-gray-800 dark:text-gray-200;
+    @apply text-2xl md:text-3xl font-semibold text-gray-800 dark:text-gray-200;
+    font-family: var(--font-montserrat), sans-serif;
   }
 
-.luxury-button {
-    @apply bg-teal-500 text-black font-medium px-6 py-3 rounded-none hover:bg-teal-600 hover:bg-opacity-90 transition-all duration-300 flex items-center gap-2;
-}
+  .luxury-button {
+    @apply bg-teal-500 text-black font-semibold px-6 py-3 rounded-md hover:bg-teal-600 hover:bg-opacity-90 transition-all duration-300 flex items-center gap-2;
+    font-family: var(--font-montserrat), sans-serif;
+  }
 
-
- .luxury-button-outline {
-    @apply border border-teal-500 text-teal-500 dark:border-white dark:text-white px-6 py-3 rounded-none hover:bg-teal-500 hover:text-black dark:hover:bg-white dark:hover:text-black transition-all;
-}
+  .luxury-button-outline {
+    @apply border border-teal-500 text-teal-500 dark:border-white dark:text-white px-6 py-3 rounded-md hover:bg-teal-500 hover:text-black dark:hover:bg-white dark:hover:text-black transition-all font-medium;
+    font-family: var(--font-montserrat), sans-serif;
+  }
 
   .luxury-card {
-    @apply bg-white dark:bg-gray-900 shadow-lg overflow-hidden border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:shadow-xl;
+    @apply bg-white dark:bg-gray-900 shadow-lg overflow-hidden border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:shadow-xl rounded-lg;
   }
   
-.luxury-overlay {
+  .luxury-overlay {
     @apply absolute inset-0 bg-teal-500 bg-opacity-30 dark:bg-black dark:bg-opacity-50 transition-opacity duration-300;
-}
+  }
+
+  /* Admin specific improvements */
+  .admin-page-title {
+    @apply text-3xl font-bold text-foreground mb-2;
+    font-family: var(--font-montserrat), sans-serif;
+    letter-spacing: -0.025em;
+  }
+  
+  .admin-page-subtitle {
+    @apply text-lg text-muted-foreground mb-6;
+    font-family: var(--font-montserrat), sans-serif;
+  }
+  
+  .admin-card-title {
+    @apply text-xl font-semibold text-foreground mb-2;
+    font-family: var(--font-montserrat), sans-serif;
+  }
+  
+  .admin-table-header {
+    @apply text-sm font-semibold text-muted-foreground uppercase tracking-wider;
+    font-family: var(--font-montserrat), sans-serif;
+  }
+  
+  .admin-button-primary {
+    @apply bg-tan text-black hover:bg-tan/90 font-medium px-4 py-2 rounded-md transition-colors;
+    font-family: var(--font-montserrat), sans-serif;
+  }
+  
+  .admin-button-secondary {
+    @apply border border-border hover:bg-accent font-medium px-4 py-2 rounded-md transition-colors;
+    font-family: var(--font-montserrat), sans-serif;
+  }
 }
 
 /* Custom animations */
