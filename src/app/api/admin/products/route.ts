@@ -1,6 +1,7 @@
 // src/app/api/admin/products/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/prisma';
+import { Prisma } from '@prisma/client';
 
 // GET /api/admin/products - List products with pagination and filtering
 export async function GET(request: NextRequest) {
@@ -15,7 +16,7 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
 
     // Build where clause
-    const where: any = {};
+    const where: Prisma.ProductWhereInput = {};
     
     if (search) {
       where.OR = [

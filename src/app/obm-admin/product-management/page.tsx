@@ -1,7 +1,8 @@
 // src/app/obm-admin/product-management/page.tsx
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -39,7 +40,7 @@ export default function ProductManagementPage() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   // Fetch products
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams({
@@ -62,7 +63,7 @@ export default function ProductManagementPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, searchTerm, sourceFilter, activeFilter]);
 
   // Fetch upload batches
   const fetchUploadBatches = async () => {
@@ -80,7 +81,7 @@ export default function ProductManagementPage() {
 
   useEffect(() => {
     fetchProducts();
-  }, [currentPage, searchTerm, sourceFilter, activeFilter]);
+  }, [fetchProducts]);
 
   useEffect(() => {
     fetchUploadBatches();
@@ -285,19 +286,22 @@ export default function ProductManagementPage() {
                     <TableRow key={product.id}>
                       <TableCell>
                         {product.images && product.images.length > 0 ? (
-                          <img
-                            src={product.images[0].imageUrl}
-                            alt={product.name}
-                            className="w-10 h-10 object-cover rounded"
-                            onError={(e) => {
-                              const img = e.target as HTMLImageElement;
-                              img.style.display = 'none';
-                              const parent = img.parentElement;
-                              if (parent) {
-                                parent.innerHTML = '<div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded flex items-center justify-center"><span class="text-xs text-gray-500">No img</span></div>';
-                              }
-                            }}
-                          />
+                          <div className="relative w-10 h-10">
+                            <Image
+                              src={product.images[0].imageUrl}
+                              alt={product.name}
+                              fill
+                              className="object-cover rounded"
+                              onError={(e) => {
+                                const img = e.target as HTMLImageElement;
+                                img.style.display = 'none';
+                                const parent = img.parentElement;
+                                if (parent) {
+                                  parent.innerHTML = '<div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded flex items-center justify-center"><span class="text-xs text-gray-500">No img</span></div>';
+                                }
+                              }}
+                            />
+                          </div>
                         ) : (
                           <div className="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded flex items-center justify-center">
                             <span className="text-xs text-gray-500">No img</span>

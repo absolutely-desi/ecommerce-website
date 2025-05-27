@@ -26,6 +26,12 @@ interface ProductDialogProps {
   onSave: () => void;
 }
 
+type ProductField = keyof Product;
+type VariantField = keyof ProductVariant;
+
+type ProductValue = string | number | boolean | null | undefined;
+type VariantValue = string | number | boolean | null | undefined;
+
 export function ProductDialog({ open, onClose, product, onSave }: ProductDialogProps) {
   const [formData, setFormData] = useState<Product>({
     sku: '',
@@ -61,14 +67,14 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
     setError('');
   }, [product, open]);
 
-  const handleInputChange = (field: string, value: any) => {
+  const handleInputChange = (field: ProductField, value: ProductValue) => {
     setFormData((prev: Product) => ({
       ...prev,
       [field]: value
     }));
   };
 
-  const handleVariantChange = (index: number, field: string, value: any) => {
+  const handleVariantChange = (index: number, field: VariantField, value: VariantValue) => {
     setVariants(prev => prev.map((variant, i) => 
       i === index ? { ...variant, [field]: value } : variant
     ));
@@ -184,7 +190,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                   <Input
                     id="sku"
                     value={formData.sku}
-                    onChange={(e) => handleInputChange('sku', e.target.value)}
+                    onChange={(e) => handleInputChange('sku', e.target.value as ProductValue)}
                     placeholder="e.g., SAREE-001"
                     required
                   />
@@ -194,7 +200,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                   <Input
                     id="name"
                     value={formData.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    onChange={(e) => handleInputChange('name', e.target.value as ProductValue)}
                     placeholder="e.g., Red Banarasi Saree"
                     required
                   />
@@ -206,7 +212,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                 <Input
                   id="shortDescription"
                   value={formData.shortDescription || ''}
-                  onChange={(e) => handleInputChange('shortDescription', e.target.value)}
+                  onChange={(e) => handleInputChange('shortDescription', e.target.value as ProductValue)}
                   placeholder="Brief product description"
                 />
               </div>
@@ -216,7 +222,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                 <textarea
                   id="productDetail"
                   value={formData.productDetail || ''}
-                  onChange={(e) => handleInputChange('productDetail', e.target.value)}
+                  onChange={(e) => handleInputChange('productDetail', e.target.value as ProductValue)}
                   placeholder="Detailed product description"
                   className="flex min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 />
@@ -235,7 +241,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                   <Label htmlFor="source">Source *</Label>
                   <Select
                     value={formData.source}
-                    onValueChange={(value) => handleInputChange('source', value)}
+                    onValueChange={(value) => handleInputChange('source', value as ProductValue)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select source" />
@@ -252,7 +258,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                   <Input
                     id="brandName"
                     value={formData.brandName || ''}
-                    onChange={(e) => handleInputChange('brandName', e.target.value)}
+                    onChange={(e) => handleInputChange('brandName', e.target.value as ProductValue)}
                     placeholder="e.g., Banarasi Weavers"
                   />
                 </div>
@@ -264,7 +270,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                   <Input
                     id="manufacturerInfo"
                     value={formData.manufacturerInfo || ''}
-                    onChange={(e) => handleInputChange('manufacturerInfo', e.target.value)}
+                    onChange={(e) => handleInputChange('manufacturerInfo', e.target.value as ProductValue)}
                     placeholder="Manufacturer details"
                   />
                 </div>
@@ -274,7 +280,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                     <Input
                       id="sourceUrl"
                       value={formData.sourceUrl || ''}
-                      onChange={(e) => handleInputChange('sourceUrl', e.target.value)}
+                      onChange={(e) => handleInputChange('sourceUrl', e.target.value as ProductValue)}
                       placeholder="Original product URL"
                     />
                   </div>
@@ -297,7 +303,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                     type="number"
                     step="0.01"
                     value={formData.weight || ''}
-                    onChange={(e) => handleInputChange('weight', e.target.value ? parseFloat(e.target.value) : undefined)}
+                    onChange={(e) => handleInputChange('weight', e.target.value ? parseFloat(e.target.value) : undefined as ProductValue)}
                     placeholder="0.50"
                   />
                 </div>
@@ -307,7 +313,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                     id="manageInventory"
                     checked={formData.manageInventory || formData.source === 'own'}
                     disabled={formData.source === 'own'}
-                    onChange={(e) => handleInputChange('manageInventory', e.target.checked)}
+                    onChange={(e) => handleInputChange('manageInventory', e.target.checked as ProductValue)}
                     className="h-4 w-4"
                   />
                   <Label htmlFor="manageInventory">Manage Inventory</Label>
@@ -319,7 +325,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                   type="checkbox"
                   id="active"
                   checked={formData.active !== false}
-                  onChange={(e) => handleInputChange('active', e.target.checked)}
+                  onChange={(e) => handleInputChange('active', e.target.checked as ProductValue)}
                   className="h-4 w-4"
                 />
                 <Label htmlFor="active">Active Product</Label>
@@ -346,7 +352,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
             <CardContent>
               {variants.length === 0 ? (
                 <p className="text-muted-foreground text-center py-4">
-                  No variants added. Click "Add Variant" to create product variants.
+                  No variants added. Click &quot;Add Variant&quot; to create product variants.
                 </p>
               ) : (
                 <div className="space-y-4">
@@ -369,7 +375,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                           <Label>Variant SKU</Label>
                           <Input
                             value={variant.sku}
-                            onChange={(e) => handleVariantChange(index, 'sku', e.target.value)}
+                            onChange={(e) => handleVariantChange(index, 'sku', e.target.value as VariantValue)}
                             placeholder="Variant SKU"
                           />
                         </div>
@@ -377,7 +383,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                           <Label>Color</Label>
                           <Input
                             value={variant.color || ''}
-                            onChange={(e) => handleVariantChange(index, 'color', e.target.value)}
+                            onChange={(e) => handleVariantChange(index, 'color', e.target.value as VariantValue)}
                             placeholder="e.g., Red"
                           />
                         </div>
@@ -385,7 +391,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                           <Label>Size</Label>
                           <Input
                             value={variant.size || ''}
-                            onChange={(e) => handleVariantChange(index, 'size', e.target.value)}
+                            onChange={(e) => handleVariantChange(index, 'size', e.target.value as VariantValue)}
                             placeholder="e.g., M, L, XL"
                           />
                         </div>
@@ -398,7 +404,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                             type="number"
                             step="0.01"
                             value={variant.regularPrice}
-                            onChange={(e) => handleVariantChange(index, 'regularPrice', parseFloat(e.target.value))}
+                            onChange={(e) => handleVariantChange(index, 'regularPrice', parseFloat(e.target.value) as VariantValue)}
                             required
                           />
                         </div>
@@ -408,7 +414,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                             type="number"
                             step="0.01"
                             value={variant.costPrice || ''}
-                            onChange={(e) => handleVariantChange(index, 'costPrice', e.target.value ? parseFloat(e.target.value) : undefined)}
+                            onChange={(e) => handleVariantChange(index, 'costPrice', e.target.value ? parseFloat(e.target.value) : undefined as VariantValue)}
                           />
                         </div>
                         <div>
@@ -416,7 +422,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                           <Input
                             type="number"
                             value={variant.quantity}
-                            onChange={(e) => handleVariantChange(index, 'quantity', parseInt(e.target.value) || 0)}
+                            onChange={(e) => handleVariantChange(index, 'quantity', parseInt(e.target.value) || 0 as VariantValue)}
                           />
                         </div>
                       </div>
@@ -427,7 +433,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                             type="checkbox"
                             id={`variant-${index}-active`}
                             checked={variant.active}
-                            onChange={(e) => handleVariantChange(index, 'active', e.target.checked)}
+                            onChange={(e) => handleVariantChange(index, 'active', e.target.checked as VariantValue)}
                             className="h-4 w-4"
                           />
                           <Label htmlFor={`variant-${index}-active`}>Active</Label>
@@ -437,7 +443,7 @@ export function ProductDialog({ open, onClose, product, onSave }: ProductDialogP
                             type="checkbox"
                             id={`variant-${index}-stock`}
                             checked={variant.stockStatus}
-                            onChange={(e) => handleVariantChange(index, 'stockStatus', e.target.checked)}
+                            onChange={(e) => handleVariantChange(index, 'stockStatus', e.target.checked as VariantValue)}
                             className="h-4 w-4"
                           />
                           <Label htmlFor={`variant-${index}-stock`}>In Stock</Label>

@@ -3,8 +3,38 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/prisma';
 import { Prisma } from '@prisma/client';
 
+interface ProductCSVRow {
+  sku: string;
+  name: string;
+  shortDescription?: string;
+  productDetail?: string;
+  source: 'offline' | 'online' | 'own';
+  brandName?: string;
+  manufacturerInfo?: string;
+  sourceUrl?: string;
+  weight?: string;
+  sizeChart?: string;
+  manageInventory?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  slug?: string;
+  active?: string;
+  variantSku?: string;
+  variantName?: string;
+  color?: string;
+  size?: string;
+  quantity?: string;
+  stockStatus?: string;
+  regularPrice: string;
+  costPrice?: string;
+  onSale?: string;
+  salePrice?: string;
+  variantActive?: string;
+  images?: string;
+}
+
 // Helper function to validate CSV row data
-function validateProductRow(row: any, rowIndex: number) {
+function validateProductRow(row: ProductCSVRow, rowIndex: number) {
   const errors: string[] = [];
   
   // Required fields validation
@@ -85,7 +115,7 @@ export async function POST(request: NextRequest) {
     // Validate all rows first
     const validationErrors: string[] = [];
     const duplicateSkus: string[] = [];
-    const processedRows: any[] = [];
+    const processedRows: ProductCSVRow[] = [];
 
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
@@ -244,20 +274,44 @@ export async function POST(request: NextRequest) {
 }
 
 // Simple CSV parser (for basic implementation)
-function parseCSV(csvContent: string): any[] {
+function parseCSV(csvContent: string): ProductCSVRow[] {
   const lines = csvContent.split('\n').filter(line => line.trim());
   if (lines.length < 2) return [];
 
   const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
-  const rows: any[] = [];
+  const rows: ProductCSVRow[] = [];
 
   for (let i = 1; i < lines.length; i++) {
     const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
-    const row: any = {};
-    
-    headers.forEach((header, index) => {
-      row[header] = values[index] || '';
-    });
+    const row: ProductCSVRow = {
+      sku: values[headers.indexOf('sku')] || '',
+      name: values[headers.indexOf('name')] || '',
+      shortDescription: values[headers.indexOf('shortDescription')] || undefined,
+      productDetail: values[headers.indexOf('productDetail')] || undefined,
+      source: (values[headers.indexOf('source')] || 'offline') as 'offline' | 'online' | 'own',
+      brandName: values[headers.indexOf('brandName')] || undefined,
+      manufacturerInfo: values[headers.indexOf('manufacturerInfo')] || undefined,
+      sourceUrl: values[headers.indexOf('sourceUrl')] || undefined,
+      weight: values[headers.indexOf('weight')] || undefined,
+      sizeChart: values[headers.indexOf('sizeChart')] || undefined,
+      manageInventory: values[headers.indexOf('manageInventory')] || undefined,
+      metaTitle: values[headers.indexOf('metaTitle')] || undefined,
+      metaDescription: values[headers.indexOf('metaDescription')] || undefined,
+      slug: values[headers.indexOf('slug')] || undefined,
+      active: values[headers.indexOf('active')] || undefined,
+      variantSku: values[headers.indexOf('variantSku')] || undefined,
+      variantName: values[headers.indexOf('variantName')] || undefined,
+      color: values[headers.indexOf('color')] || undefined,
+      size: values[headers.indexOf('size')] || undefined,
+      quantity: values[headers.indexOf('quantity')] || undefined,
+      stockStatus: values[headers.indexOf('stockStatus')] || undefined,
+      regularPrice: values[headers.indexOf('regularPrice')] || '0',
+      costPrice: values[headers.indexOf('costPrice')] || undefined,
+      onSale: values[headers.indexOf('onSale')] || undefined,
+      salePrice: values[headers.indexOf('salePrice')] || undefined,
+      variantActive: values[headers.indexOf('variantActive')] || undefined,
+      images: values[headers.indexOf('images')] || undefined
+    };
     
     rows.push(row);
   }

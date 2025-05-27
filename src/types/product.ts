@@ -12,7 +12,7 @@ export interface ProductVariant {
     onSale: boolean;
     salePrice?: number;
     discountCostPrice?: number;
-    variantData?: any;
+    variantData?: Record<string, string | number | boolean>;
     active: boolean;
   }
   
@@ -86,7 +86,11 @@ export interface ProductVariant {
     processedRows: number;
     successRows: number;
     errorRows: number;
-    errorLog?: any;
+    errorLog?: {
+      validationErrors?: string[];
+      duplicateSkus?: string[];
+      processingErrors?: string[];
+    };
     createdAt: string;
     completedAt?: string;
   }
